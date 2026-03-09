@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--objembed_checkpoint', type=str, default='')
     parser.add_argument('--wedetect_uni_checkpoint', type=str, default='')
-    parser.add_argument('--image', nargs='+', type=str, required=True, help='sperate by space')
+    parser.add_argument('--image', nargs='+', type=str, default=None, help='sperate by space')
     parser.add_argument('--query', type=str, default='')
     parser.add_argument('--image_query', type=str, default='')
     parser.add_argument('--task', type=str, default='rec', choices=['rec', 'retrieval_by_object', 'retrieval_by_image'])
