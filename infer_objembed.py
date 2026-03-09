@@ -243,14 +243,28 @@ if __name__ == '__main__':
         # pred_scores = pred_scores.reshape(len(args.image), 100)
         # pred_scores = torch.max(pred_scores, dim=0)[0]
         # print(pred_scores)
+
+        # pred_scores = pred_scores.reshape(len(args.image), 100)
+
+        # image_scores = torch.max(pred_scores, dim=1)[0]
+
+        # best_idx = torch.argmax(image_scores)
+
+        # print("Best image:", args.image[best_idx])
+        # print("Score:", image_scores[best_idx])
+
+            # reshape về [num_images, num_objects]
         pred_scores = pred_scores.reshape(len(args.image), 100)
 
+        # lấy object score tốt nhất của mỗi ảnh
         image_scores = torch.max(pred_scores, dim=1)[0]
 
-        best_idx = torch.argmax(image_scores)
+        # sort ranking
+        sorted_idx = torch.argsort(image_scores, descending=True)
 
-        print("Best image:", args.image[best_idx])
-        print("Score:", image_scores[best_idx])
+        print("\nImage ranking:")
+        for rank, idx in enumerate(sorted_idx):
+            print(f"Rank {rank+1}: {args.image[idx]} | Score: {image_scores[idx].item():.4f}")
     elif args.task == 'retrieval_by_image':
         candicate_image_embedding = F.normalize(candicate_image_embedding, dim=-1)
         query_embedding = F.normalize(query_embedding, dim=-1)
