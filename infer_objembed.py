@@ -58,15 +58,11 @@ if __name__ == '__main__':
     # load qwen model
     model_kwargs = dict(
         torch_dtype=torch.bfloat16,
-        attn_implementation="flash_attention_2",
+        # attn_implementation="flash_attention_2",
+        attn_implementation="sdpa",
     )
 
-    # model = ObjectEmbed.from_pretrained(args.objembed_checkpoint, **model_kwargs)
-    model = ObjectEmbed.from_pretrained(
-    args.objembed_checkpoint,
-    attn_implementation="sdpa",
-    **model_kwargs
-    )
+    model = ObjectEmbed.from_pretrained(args.objembed_checkpoint, **model_kwargs)
     processor = AutoProcessor.from_pretrained(args.objembed_checkpoint)
     object_token_index = processor.tokenizer.convert_tokens_to_ids("<object>")
     local_text_id = processor.tokenizer.convert_tokens_to_ids("<local_text>")
