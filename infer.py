@@ -20,6 +20,7 @@ if __name__ == '__main__':
     parser.add_argument('--image_query', type=str, default='')
     parser.add_argument('--task', type=str, default='rec', choices=['rec', 'retrieval_by_object', 'retrieval_by_image'])
     parser.add_argument('--visualize', action='store_true', help='only for rec task')
+    parser.add_argument("--topk", type=int, default=5)
 
     # thêm
     parser.add_argument('--embedding_file', type=str, default=None)
