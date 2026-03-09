@@ -240,9 +240,17 @@ if __name__ == '__main__':
         pred_scores = pred_scores * model.logit_log_scale.exp()
         pred_scores = pred_scores + model.logit_bias
         pred_scores = pred_scores.float().sigmoid().cpu()
+        # pred_scores = pred_scores.reshape(len(args.image), 100)
+        # pred_scores = torch.max(pred_scores, dim=0)[0]
+        # print(pred_scores)
         pred_scores = pred_scores.reshape(len(args.image), 100)
-        pred_scores = torch.max(pred_scores, dim=0)[0]
-        print(pred_scores)
+
+        image_scores = torch.max(pred_scores, dim=1)[0]
+
+        best_idx = torch.argmax(image_scores)
+
+        print("Best image:", args.image[best_idx])
+        print("Score:", image_scores[best_idx])
     elif args.task == 'retrieval_by_image':
         candicate_image_embedding = F.normalize(candicate_image_embedding, dim=-1)
         query_embedding = F.normalize(query_embedding, dim=-1)
