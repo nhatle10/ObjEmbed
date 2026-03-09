@@ -253,7 +253,7 @@ if __name__ == '__main__':
         # print("Best image:", args.image[best_idx])
         # print("Score:", image_scores[best_idx])
 
-            # reshape về [num_images, num_objects]
+        # reshape về [num_images, num_objects]
         pred_scores = pred_scores.reshape(len(args.image), 100)
 
         # lấy object score tốt nhất của mỗi ảnh
