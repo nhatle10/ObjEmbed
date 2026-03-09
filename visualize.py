@@ -21,3 +21,5 @@ def plot_topk(image_paths, scores):
         ax.axis("off")
 
     display(fig)
+
+    plt.show()
