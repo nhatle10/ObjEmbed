@@ -1,22 +1,10 @@
-import matplotlib.pyplot as plt
 from PIL import Image
+from IPython.display import display
 
 
-def plot_topk(image_paths, scores, cols=5):
+def plot_topk(image_paths, scores):
 
-    k = len(image_paths)
-    rows = (k + cols - 1) // cols
+    for path,score in zip(image_paths,scores):
 
-    plt.figure(figsize=(4*cols, 4*rows))
-
-    for i, (img_path, score) in enumerate(zip(image_paths, scores)):
-
-        img = Image.open(img_path).convert("RGB")
-
-        plt.subplot(rows, cols, i+1)
-        plt.imshow(img)
-        plt.title(f"{score:.3f}")
-        plt.axis("off")
-
-    plt.tight_layout()
-    plt.show()
+        print(f"Score: {score:.3f}")
+        display(Image.open(path))
