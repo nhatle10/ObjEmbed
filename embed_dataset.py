@@ -8,6 +8,7 @@ import torch
 from PIL import Image
 import copy
 import os
+from tqdm import tqdm
 
 
 if __name__ == "__main__":
@@ -100,7 +101,8 @@ if __name__ == "__main__":
 
     all_proposals = []
 
-    for img_path in args.image:
+    # for img_path in args.image:
+    for img_path in tqdm(args.image, desc="Embedding images"):
 
         with torch.no_grad():
             outputs = det_model([img_path])
