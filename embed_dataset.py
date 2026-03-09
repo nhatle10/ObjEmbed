@@ -7,6 +7,7 @@ import argparse
 import torch
 from PIL import Image
 import copy
+import os
 
 
 if __name__ == "__main__":
@@ -15,10 +16,27 @@ if __name__ == "__main__":
 
     parser.add_argument('--objembed_checkpoint', type=str, required=True)
     parser.add_argument('--wedetect_uni_checkpoint', type=str, required=True)
-    parser.add_argument('--image', nargs='+', type=str, required=True)
+    parser.add_argument('--image', nargs='+', type=str, default=None)
+    parser.add_argument('--image_folder', type=str, default=None)
     parser.add_argument('--output', type=str, default="dataset_embed.pt")
 
     args = parser.parse_args()
+
+    # ----------- BỔ SUNG PHẦN NÀY -----------
+
+    if args.image is None and args.image_folder is not None:
+        image_list = []
+        for file in os.listdir(args.image_folder):
+            if file.lower().endswith((".jpg", ".jpeg", ".png", ".bmp")):
+                image_list.append(os.path.join(args.image_folder, file))
+
+        image_list = sorted(image_list)
+        args.image = image_list
+
+    if args.image is None:
+        raise ValueError("You must provide either --image or --image_folder")
+
+    # ----------------------------------------
 
     print("Embedding images:", args.image)
 
