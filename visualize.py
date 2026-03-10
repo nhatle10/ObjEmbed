@@ -1,30 +1,30 @@
-# import matplotlib.pyplot as plt
-# from PIL import Image
+import matplotlib.pyplot as plt
+from PIL import Image
 
 
-# def plot_topk(image_paths, scores):
+def plot_topk(image_paths, scores):
 
-#     cols = 5
-#     k = len(image_paths)
-#     rows = (k + cols - 1) // cols
+    cols = 5
+    k = len(image_paths)
+    rows = (k + cols - 1) // cols
 
-#     plt.figure(figsize=(4*cols,4*rows))
+    plt.figure(figsize=(4*cols,4*rows))
 
-#     for i,(path,score) in enumerate(zip(image_paths,scores)):
+    for i,(path,score) in enumerate(zip(image_paths,scores)):
 
-#         img = Image.open(path).convert("RGB")
+        img = Image.open(path).convert("RGB")
 
-#         plt.subplot(rows,cols,i+1)
-#         plt.imshow(img)
-#         plt.title(f"{score:.3f}")
-#         plt.axis("off")
+        plt.subplot(rows,cols,i+1)
+        plt.imshow(img)
+        plt.title(f"{score:.3f}")
+        plt.axis("off")
 
-#     plt.tight_layout()
+    plt.tight_layout()
 
-#     save_path = "topk_result.png"
-#     plt.savefig(save_path)
+    save_path = "topk_result.png"
+    plt.savefig(save_path)
 
-#     print("Saved visualization:", save_path)
+    print("Saved visualization:", save_path)
 
 from PIL import Image
 import matplotlib.pyplot as plt
