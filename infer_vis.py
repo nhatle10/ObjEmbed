@@ -227,19 +227,44 @@ if __name__ == '__main__':
 
         pred_scores = pred_scores.reshape(len(args.image),100)
 
-        image_scores = torch.max(pred_scores, dim=1)[0]
+        # image_scores = torch.max(pred_scores, dim=1)[0]
+
+        # topk = min(args.topk, len(image_scores))
+
+        # scores, idxs = torch.topk(image_scores, topk)
+
+        # print("\nTop-K images:")
+
+        # topk_images = []
+
+        # for rank,(i,s) in enumerate(zip(idxs,scores)):
+        #     print(f"{rank+1}. {args.image[i]}  score={s:.4f}")
+        #     topk_images.append(args.image[i])
+
+        # if args.visualize:
+        #     plot_topk(topk_images, scores.tolist())
+
+        image_scores, best_obj_idx = torch.max(pred_scores, dim=1)
 
         topk = min(args.topk, len(image_scores))
-
         scores, idxs = torch.topk(image_scores, topk)
+
+        topk_images = []
+        topk_boxes = []
 
         print("\nTop-K images:")
 
-        topk_images = []
-
         for rank,(i,s) in enumerate(zip(idxs,scores)):
-            print(f"{rank+1}. {args.image[i]}  score={s:.4f}")
-            topk_images.append(args.image[i])
+
+            img_path = args.image[i]
+            obj_id = best_obj_idx[i]
+
+            bbox = proposals[i][0][obj_id]
+
+            print(f"{rank+1}. {img_path} score={s:.4f}")
+
+            topk_images.append(img_path)
+            topk_boxes.append(bbox)
 
         if args.visualize:
             plot_topk(topk_images, scores.tolist())
