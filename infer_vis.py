@@ -3,7 +3,7 @@ from models.vision_process import process_vision_info
 from transformers import AutoProcessor
 from generate_proposal import SimpleYOLOWorldDetector
 from vis import plot_bounding_boxes
-from visualize import plot_topk
+from visualize import plot_topk, plot_topk_with_bbox
 import argparse
 import torch
 from PIL import Image
@@ -267,7 +267,7 @@ if __name__ == '__main__':
             topk_boxes.append(bbox)
 
         if args.visualize:
-            plot_topk(topk_images, scores.tolist())
+            plot_topk_with_bbox(topk_images, topk_boxes, scores.tolist())
 
     # ====================================
     # RETRIEVAL BY IMAGE
